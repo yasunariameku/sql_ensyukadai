@@ -36,7 +36,7 @@ FROM customer
 order by customer_id asc;
 
 
-7. LIMIT
+-- 7. LIMIT
 select *
 from sales
 order by customer_id 
@@ -44,14 +44,14 @@ limit 2;
 
 
 
-8. GROUP BY、MIN、SUM、サブクエリ、別名
+-- 8. GROUP BY、MIN、SUM、サブクエリ、別名
 select min(order_data), sum(amount) as sum_amount
 from sales
 where order_data = (select min(order_data)
                     from sales);
 
 
-9. GROUP BY、JOIN、AVG、TRUNC、別名
+-- 9. GROUP BY、JOIN、AVG、TRUNC、別名
 select s.customer_id, customer_name, trunc(avg(amount)) as avg_amount
 from sales as s
 join customer as c 
@@ -60,4 +60,11 @@ group by s.customer_id, customer_name
 order by s.customer_id asc;
 
 
-10. BETWEEN、LIMIT、サブクエリ
+-- 10. BETWEEN、LIMIT、サブクエリ
+select *
+from sales
+where sales_id = (select sales_id
+                  from sales
+                  where order_data between '2018-09-01'and '2018-09-30'
+                  order by amount desc
+                  limit 1);
